@@ -1,11 +1,12 @@
 const express = require("express");
 const http = require("http");
 const https = require('https');
+const fs = require('fs');
 
 
 var options = {
-    key: fs.readFileSync(""),
-    cert: fs.readFileSync("")
+    key: fs.readFileSync("./ssl/privkey.pem"),
+    cert: fs.readFileSync("./ssl/fullchain.pem")
 };
 
 
@@ -46,7 +47,7 @@ httpServer.listen(PORT_HTTP, () => {
 });
 
 
-const PORT_HTTPS = 80;
+const PORT_HTTPS = 443;
 httpsServer.listen(PORT_HTTPS, () => {
     console.log(`Example app listening at port: ${PORT_HTTPS}`);
 });
