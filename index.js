@@ -3,12 +3,10 @@ const http = require("http");
 const https = require('https');
 const fs = require('fs');
 
-
 var options = {
     key: fs.readFileSync("./ssl/privkey.pem"),
     cert: fs.readFileSync("./ssl/fullchain.pem")
 };
-
 
 const app = express();
 const httpServer = http.createServer(app);
