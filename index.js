@@ -14,7 +14,7 @@ const httpsServer = https.createServer(options, app);
 const httpSocket = require("socket.io")(httpServer, {
     cors: {
       origin: '*',
-    }
+    },
   });
 const httpsSocket = require("socket.io")(httpsServer, {
     cors: {
@@ -37,7 +37,6 @@ app.post("/to-socket", express.json(), async (req, res) => {
 
     res.status(200).json({status: true, msg: "Data telah diteruskan"})
 });
-
 app.post("/to-socket-bri", express.json(), async (req, res) => {
     const { HeaderID, LevelUser, UserName, StatusTransaksiType } = req.body;
     httpSocket.emit("event-bri", HeaderID, req.body);
@@ -46,22 +45,25 @@ app.post("/to-socket-bri", express.json(), async (req, res) => {
     res.status(200).json({status: true, msg: "Data telah diteruskan"})
 });
 
-httpSocket.on('to-socket-bri', (data) => {
-    httpSocket.emit("event-bri", data.HeaderID, data);
+httpSocket.on("connection", (socket) => {
+    socket.on('to-socket-bri', (data) => {
+        httpSocket.emit("event-bri", data.HeaderID, data);
+    });
 });
 
-httpsSocket.on('to-socket-bri', (data) => {
-    httpsSocket.emit("event-bri", data.HeaderID, data);
+httpsSocket.on("connection", (socket) => {
+    socket.on('to-socket-bri', (data) => {
+        httpSocket.emit("event-bri", data.HeaderID, data);
+    });
 });
 
-
-const PORT_HTTP = 80;
+const PORT_HTTP = 8000;
 httpServer.listen(PORT_HTTP, () => {
     console.log(`Example app listening at ${PORT_HTTP}`);
 });
 
 
-const PORT_HTTPS = 443;
+const PORT_HTTPS = 4430;
 httpsServer.listen(PORT_HTTPS, () => {
     console.log(`Example app listening at port: ${PORT_HTTPS}`);
 });
