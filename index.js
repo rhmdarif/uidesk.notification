@@ -53,7 +53,7 @@ httpSocket.on("connection", (socket) => {
 
 httpsSocket.on("connection", (socket) => {
     socket.on('to-socket-bri', (data) => {
-        httpSocket.emit("event-bri", data.HeaderID, data);
+        httpsSocket.emit("event-bri", data.HeaderID, data);
     });
 });
 

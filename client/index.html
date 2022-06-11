@@ -18,12 +18,11 @@
 
     <script>
       const session_id = 1234;
-      const socket = io("http://127.0.0.1:8000", {
+      const socket = io("//socketnotif.sipasol.com", {
         transports: ["websocket", "polling"],
+        // path : "/socket-notifications/socket.io"
       });
     </script>
-
-    <script src="desktop-notification.js"></script>
 
     <script>
       $("button").click(() => {
@@ -41,5 +40,7 @@
         }
       });
     </script>
+
+    <script src="desktop-notification.js"></script>
   </body>
 </html>
